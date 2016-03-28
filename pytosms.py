@@ -10,12 +10,13 @@ class SMS(object):
     SMS object with the following properties:
     
     Attributes:
-        p_to: a string with the recipient's phone number
-        p_from: a string with the sender's phone number
+        to: a string with the recipient's phone number
+        fr: a string with the sender's phone number
+        sendhost: a string with a domain the sender controls (alternately, "" for example.org)
         msg: a string containing the message (not to be longer than 120 chars)
     """
     
-    def __init__(self, to, fr, msg, sendhost):
+    def __init__(self, fr, to, sendhost, msg):
         """Return an SMS object"""
         self.to = to
         self.fr = fr
@@ -34,12 +35,11 @@ class SMS(object):
         Sends message. Returns True if successfully used SMTP server to send message,
         returns False if there is no server running.
         """
-        text_to_send = MIMEText(self.msg)
 
         carriers = ["@txt.att.net", "@txt.windmobile.ca", "@vxtext.com",\
                     "@text.republicwireless.com", "@msg.fi.google.com",\
-                    "@email.uscc.net", "@message.alltel.com", "@messaging.sprintpc.com",\
-                    "@mobile.celloneusa.com", "@msg.telus.com", "paging.acswireless.com",\
+                    "@email.uscc.net", "@messaging.sprintpc.com",\
+                    "@msg.telus.com", "@paging.acswireless.com",\
                     "@pcs.rogers.com", "@questmp.com", "@sms.mycricket.com",\
                     "@sms.ntwls.net","@tmomail.net"]
         
@@ -48,13 +48,13 @@ class SMS(object):
         fr_address += self.sendhost
 
         for carrier in carriers:
+            #trying each supported carrier in sequence
             to_address = self.to
             to_address += carrier
-            
+            print("trying carrier,",to_address)
             try:        
                 s = smtplib.SMTP('localhost')
-                #s.send_message(text_to_send)
-                s.sendmail(fr_addess, to_address, self.msg)
+                s.sendmail(fr_address, to_address, self.msg)
                 s.quit()
             except ConnectionRefusedError:
                 print("You are not running an SMTP server, i.e. sendmail, on your local machine. Exiting.")
