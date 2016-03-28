@@ -36,11 +36,11 @@ class SMS(object):
         returns False if there is no server running.
         """
 
-        carriers = ["@txt.att.net", "@txt.windmobile.ca", "@vxtext.com",\
+        carriers = ["@txt.att.net", "@txt.windmobile.ca", "@vtext.com",\
                     "@text.republicwireless.com", "@msg.fi.google.com",\
                     "@email.uscc.net", "@messaging.sprintpc.com",\
                     "@msg.telus.com", "@paging.acswireless.com",\
-                    "@pcs.rogers.com", "@questmp.com", "@sms.mycricket.com",\
+                    "@pcs.rogers.com", "@sms.mycricket.com",\
                     "@sms.ntwls.net","@tmomail.net"]
         
         #append the sending host to our from address
