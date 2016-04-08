@@ -1,5 +1,5 @@
 # pytosms
-# (c) Brunston Poon 2016
+# (c) brupoon
 # MIT License
 
 import smtplib
